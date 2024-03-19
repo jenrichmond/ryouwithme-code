@@ -1,0 +1,110 @@
+---
+title: "MarkyMark"
+author: "Jen Richmond"
+date: "10/06/2019"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Headings
+You can make levels of heading in Rmarkdown documents using hash. 
+
+# One hash for big headings
+## Two hash for smaller headings
+### Three hash for even smaller headings
+#### and so on and so on....
+ 
+ 
+# Bold and italics
+
+You can also make things bold and ital using asterik on either side of the text. Use two asteriks for bold and 1 asterisk for ital
+
+**I want this to be bold**
+
+*I want this to be italics*
+
+# Bullet points
+
+You can make bullet points with dashes. 
+
+- bullet 1
+- bullet 2
+- bullet 3
+
+Don't forget to put a space after the dash to get bullets. 
+
+# Quotes 
+
+Get quotes using a >
+
+> "There is no such thing as a silly question - Jen Richmond, R-Ladies Sydney"
+
+# Link
+
+You can insert links with a combination of round and square brackets. Put the text in square brackets and the url in round brackets. 
+
+You can find resource from our RMarkdownThrowdown event at [Jen's github](https://github.com/jenrichmond/RMarkdownThrowdown). 
+
+#Pictures/gifs/tweets
+
+Its pretty easy to embed all kinds of things in Rmarkdown documents. 
+
+### Pictures
+
+Use `![](nameofimage.png)`
+
+![](hackdown.png)
+
+### Tweets
+
+use the embed code from Twitter to insert tweets
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">🎶 Happy birthday to us! 🎶 Happy birthday to us! 🎶 <br><br>We&#39;re turning 1 and throwing ourselves a birthday party on 31 July, 6-8pm! <br><br>Mirroring our launch party, we&#39;re looking for ⚡ lightning talk ⚡ presenters! <br><br>RSVP and more info: <a href="https://t.co/GUoocp0Cab">https://t.co/GUoocp0Cab</a> <a href="https://t.co/qHyr1djPM1">pic.twitter.com/qHyr1djPM1</a></p>&mdash; R-Ladies Sydney (@RLadiesSydney) <a href="https://twitter.com/RLadiesSydney/status/1137473664100651009?ref_src=twsrc%5Etfw">June 8, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+### gifs
+
+Use the embed code
+
+<iframe src="https://giphy.com/embed/3ohhwmQ0xIg8W3pHd6" width="480" height="456" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/happy-birthday-3ohhwmQ0xIg8W3pHd6">via GIPHY</a></p>
+
+
+# What about code?
+We can intersperse notes and code "chunks". Use the insert pull down, or hotkey alt-command-I (mac). Run the code in each chunk using the green arrow or hotkey Ctrl-shift-enter. 
+
+#load packages
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+```
+
+#read in the beaches data
+```{r message=FALSE, warning=FALSE}
+beaches <- read_csv("sydneybeaches.csv")
+```
+# plot mean bug levels by site
+```{r}
+beaches %>%
+  group_by(Site) %>%
+  summarise(meanbugs = mean(`Enterococci (cfu/100ml)`, na.rm = TRUE)) %>%
+  ggplot(aes(x = Site, y= meanbugs)) +
+  geom_col() +
+  coord_flip()
+```
+
+# Export formats
+
+The default format is html, you can also export to pdf or word.  Use the pulldown on the knit menu to export to another format. Watch out, pdf is finickity. You need to also have some LaTex (pronounced Lah-Tech) thing also installed. Try installing the `tinytex` package 
+
+```{r}
+install.package("tinytex")
+library(tinytex)
+```
+
