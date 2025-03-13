@@ -13,7 +13,7 @@ theme_set(theme_classic())
 
 plotbeaches <- read_csv(here("data", "cleanbeaches_new.csv"))
 
-# plot buglevels  by year-------
+# 1.1 plot buglevels  by year -------
 
 plotbeaches %>%
   ggplot(aes(x = year, y = beachbugs)) +
@@ -29,12 +29,19 @@ plotbeaches %>%
   ggplot(aes(x = year, y = beachbugs)) +
   geom_jitter() 
 
+
+
 ggsave(here("output", "bugsbyyear_jitter.png"))
 
 # coerce year to be factor rather than integer
 plotbeaches$year <- as.factor(plotbeaches$year)
 
-# plot bug levels by site--------
+# glimpse to check it did the right thing
+
+glimpse(plotbeaches)
+
+# 1.2 use colour to differentiate site --------
+
 plotbeaches %>% 
   na.omit() %>%
   ggplot(aes(x = site, y = beachbugs, color = year)) +
@@ -43,10 +50,9 @@ plotbeaches %>%
 
 ggsave(here("output", "bugsbybeach_coloryear.png"))
 
-# glimpse to check it did the right thing
-glimpse(plotbeaches)
 
-# facet wrap-----------
+
+# 1.3 facet wrap -----------
 
 plotbeaches %>%
   na.omit() %>%
@@ -56,7 +62,7 @@ plotbeaches %>%
 
 ggsave(here("output", "bugsbybeach_facetsite_all.png"))
 
-#combine filter and ggplot-----------
+# 1.4 combine filter and ggplot-----------
 
 plotbeaches %>%
   na.omit() %>%
@@ -75,11 +81,11 @@ plotbeaches %>%
   geom_point() +
   facet_wrap(~ site) 
 
-#how to get ggplots out of R -----------
+# 1.5 how to get ggplots out of R -----------
   
   ggsave(here("output", "coogeebondi.png"))
 
-# boxes and violins----------
+# 2.1 boxes and violins----------
 
 plotbeaches %>%
   na.omit() %>%
@@ -96,7 +102,7 @@ plotbeaches %>%
 
 ggsave(here("output", "log_violin.png"))
 
-#filtered for buggier than average for that site = true
+# filtered for buggier than average for that site = true
   
 plotbeaches %>%
     na.omit() %>% 
@@ -107,7 +113,7 @@ plotbeaches %>%
 
 ggsave(here("output", "log_violin_buggier.png"))
 
-#histogram----------
+# 2.2 histogram----------
 
 hist(plotbeaches$beachbugs)
 
@@ -121,7 +127,7 @@ plotbeaches %>%
 
 ggsave(here("output", "clovelly_histogram.png"))
 
-# combination plot---------------
+# 2.3 combination plot---------------
 
 plotbeaches %>%
   na.omit() %>%
@@ -142,7 +148,7 @@ plotbeaches %>%
 
 ggsave(here("output", "boxcolour_council.png"))
 
-# bar and column plots ----------
+# 3.1 bar and column plots ----------
 
 # use geom_bar for frequency/count data
 plotbeaches %>%
@@ -153,13 +159,13 @@ plotbeaches %>%
 
 ggsave(here("output", "bar_year.png"))
 
-# use geom_col for plotting asummary stat (the default is sum)
+# use geom_col for plotting a summary stat (the default is sum)
 plotbeaches %>%
   na.omit() %>%
   ggplot(aes(x = year, y = beachbugs)) +
   geom_col()
 
-#checking what the geom_col is plotting
+# checking what the geom_col is plotting
 plotbeaches %>%
   na.omit() %>%
   group_by(year) %>%
@@ -175,7 +181,7 @@ plotbeaches %>%
   
   ggsave(here("output", "col_meanbugs.png"))
   
-#what about error bars---------
+# 3.2 what about error bars---------
   
   plotbeaches %>%
     na.omit() %>%
@@ -191,7 +197,7 @@ plotbeaches %>%
   
   ggsave(here("output", "col_meanbugs_error.png"))
 
-# correlation/scatter plots ------------
+# 3.3 correlation/scatter plots ------------
   
   raintemp <- read_csv(here("data", "rain_temp_beachbugs.csv"))
   
@@ -204,9 +210,9 @@ plotbeaches %>%
   
   ggsave(here("output", "scatter_rain_temp.png"))
 
-# how do I change x-------------
+# 4 how do I change x-------------
   
-  #get rid of the grey and gridlines
+# 4.1 get rid of the grey and gridlines---------
   
   raintemp %>%
     na.omit() %>%
@@ -219,7 +225,7 @@ plotbeaches %>%
   ggsave(here("output", "scatter_classic.png"))
   
   
-  # the color so it refelects cool is blue and hot is red
+# 4.2 the color so it refelects cool is blue and hot is red-------
   
   raintemp %>%
     na.omit() %>%
@@ -247,7 +253,7 @@ plotbeaches %>%
   
   ggsave(here("output", "scatter_colour2.png"))
   
- # add titles and change axis labels -----------
+ # 4.3 add titles and change axis labels -----------
   
   raintemp %>%
     na.omit() %>%
@@ -263,8 +269,5 @@ plotbeaches %>%
          x = "Rainfall (mm)", 
          y = "Mean enterococci levels")
     
-    
-    ggsave("beaches_labs.png")
-  
-knitr::spin(here("scripts", "vizwhiz.R"), precious = TRUE)   
+    ggsave(here("output","beaches_labs.png"))
   
