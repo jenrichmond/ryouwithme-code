@@ -12,3 +12,5 @@ The RYouWithMe videos that are embedded in the course are also available on yout
 - [MarkyMark](https://www.youtube.com/watch?v=YATLwVrvjVw&list=PLkAPliqRo9-lfBUmjHW1DX5v-7awFhrMw)
 
 The [RYouWithMe package](https://github.com/jenrichmond/ryouwithme) contains all the data files that we use in the course. 
+
+The code scraps in this repo were last checked and updated in February 2025. 
